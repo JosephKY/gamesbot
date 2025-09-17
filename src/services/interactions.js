@@ -1,3 +1,4 @@
+require('dotenv').config()
 const fs = require("fs");
 const { join } = require("path");
 const { cwd } = require("process");
@@ -10,7 +11,7 @@ const affirmUser = require("../helpers/affirmuser");
 const { Game, ActiveGame } = require("./games");
 const { transactionHistoryNext, transactionHistoryPrev } = require("../helpers/transhistory");
 let compiledCommands = {};
-let forcePOST = false;
+let forcePOST = process.env.MODE === 'DEV' ? true : false;
 
 function loadCommands(client){
     return new Promise(async (resolve, reject) => {
@@ -35,8 +36,8 @@ function loadCommands(client){
                 await client.application.commands.set(commandList)
                 
                 let debugGuild = await getGuild(client, debugGuildId)
-                await debugGuild.commands.set([]);
-                //await debugGuild.commands.set(commandList)
+                //await debugGuild.commands.set([]);
+                await debugGuild.commands.set(commandList)
 
                 await CMDState.create({
                     state: commandState
