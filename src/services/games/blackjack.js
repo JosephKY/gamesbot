@@ -26,6 +26,8 @@ let inactivityTimes = {};
 async function handleGame(interaction, game, action){
     let msgPayload;
     let data = game.data.data;
+    let preferredAvatarURL = interaction.user.avatarURL() || interaction.user.defaultAvatarURL
+    let preferredName = interaction.user.globalName || interaction.user.username;
 
     //inactivityTimes[game.data.meta.uuid] = Date.now() + 300000;
 
@@ -136,6 +138,10 @@ async function handleGame(interaction, game, action){
                     .setColor(3311670)
                     .setDescription(`${game.data.meta.created.user.username} abandoned the game and lost their bet`)
                     .setImage(`attachment://${data.lastImageData.fileName}`)
+                    .setFooter({
+                        'iconURL': preferredAvatarURL,
+                        'text': preferredName
+                    })
                 ],
                 files: [data.lastImageData.filePath]
             })
@@ -205,7 +211,7 @@ async function handleGame(interaction, game, action){
     let actionText = 'Make your move...';
     if(action === 'stand'){
         data.playerHands[targetHandIndex].status = 'stood'
-        actionText = `*${interaction.user.username} stands...*`
+        actionText = `*${preferredName} stands...*`
     }
     if(action === 'hit'){
         data.playerHands[targetHandIndex].cards.push(randomItem(data.deck, true))
@@ -224,7 +230,7 @@ async function handleGame(interaction, game, action){
             data.playerHands[targetHandIndex].status = 'bust';
         }
 
-        actionText = `*${interaction.user.username} hits...*`
+        actionText = `*${preferredName} hits...*`
     }
     if(action === 'split'){
         let balance = await getBalance(interaction.user.id);
@@ -234,9 +240,9 @@ async function handleGame(interaction, game, action){
         }
         balance = balance - handBet // adjust balance again for if they split
         if(data.playerHands.length == 3){
-            actionText = `*${interaction.user.username} tried to split, but they've already reached the maximum of 3 hands...*`
+            actionText = `*${preferredName} tried to split, but they've already reached the maximum of 3 hands...*`
         } else if(balance < 0){
-            actionText = `*${interaction.user.username} tried to split, but they can't afford to make another $${handBet} bet...*`
+            actionText = `*${preferredName} tried to split, but they can't afford to make another $${handBet} bet...*`
         } else {
             let newDeckIndex = data.playerHands.length;
             data.playerHands[newDeckIndex] = {
@@ -248,7 +254,7 @@ async function handleGame(interaction, game, action){
                 ]
             }
             data.playerHands[targetHandIndex].cards.push(randomItem(data.deck, true))
-            actionText = `*${interaction.user.username} splits...*`
+            actionText = `*${preferredName} splits...*`
         }
     }
 
@@ -295,6 +301,10 @@ async function handleGame(interaction, game, action){
             .setColor(3311670)
             .setImage(`attachment://${gameImageData.fileName}`)
             .setDescription(actionText)
+            .setFooter({
+                'iconURL': preferredAvatarURL,
+                'text': preferredName
+            })
         ],
         files: [
             gameImageData.filePath
@@ -324,10 +334,6 @@ module.exports = {
                         new EmbedBuilder()
                         .setColor(15548997)
                         .setDescription(`❌ The minimum bet for this game is $${game.data.meta.rootGame.minBet}, but you only have a balance of **$${userBalance}**. If you need some extra money, consider using **/freemoney**`)
-                        .setFooter({
-                            'iconURL': interaction.user.avatarURL() || interaction.user.defaultAvatarURL,
-                            'text': interaction.user.globalName || interaction.user.username
-                        })
                     ],
                     
                 })
@@ -340,6 +346,10 @@ module.exports = {
                         new EmbedBuilder()
                         .setColor(3311670)
                         .setImage(`attachment://${starterImageData.fileName}`)
+                        .setFooter({
+                            'iconURL': interaction.user.avatarURL() || interaction.user.defaultAvatarURL,
+                            'text': interaction.user.globalName || interaction.user.username
+                        })
                     ],
                     components: [
                         new ActionRowBuilder()
