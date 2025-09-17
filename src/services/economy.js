@@ -25,12 +25,15 @@ function incrementBalance({
 }){
     return new Promise(async (resolve, reject) => {
         try {
-            let newBal = (await User.increment(['balance'], {
+            
+            await User.increment(['balance'], {
                 by: increment,
                 where: {
                     'id': userId
                 }
-            }))[0][0][0].balance;
+            });
+
+            let newBal = await getBalance(userId);
 
             await Transaction.create({
                 userId: userId,
@@ -38,7 +41,7 @@ function incrementBalance({
                 description: description,
                 amount: increment,
                 newBalance: newBal
-            })
+            });
 
             resolve(newBal);
         } catch (e) {

@@ -1,5 +1,7 @@
+require("dotenv").config();
+
 module.exports = {
-    designatedGuildId: "948709732066148422",
+    designatedGuildId: process.env.MODE === 'DEV' ? "704616349330309200" : "948709732066148422",
     legacyCommandPrefix: ".",
-    debugGuildId: "948709732066148422"
+    debugGuildId: process.env.MODE === 'DEV' ? "704616349330309200" : "948709732066148422"
 }

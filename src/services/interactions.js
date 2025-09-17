@@ -36,7 +36,7 @@ function loadCommands(client){
                 
                 let debugGuild = await getGuild(client, debugGuildId)
                 await debugGuild.commands.set([]);
-                //debugGuild.commands.set(commandList)
+                //await debugGuild.commands.set(commandList)
 
                 await CMDState.create({
                     state: commandState
