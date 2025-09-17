@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.46",
+    "canvas": "^3.2.0",
+    "discord.js": "^14.22.1",
+    "dotenv": "^17.2.1",
+    "mysql2": "^3.15.0",
+    "nodemon": "^3.1.10",
+    "path": "^0.12.7",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7",
+    "sharp": "^0.34.3"
+  },
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  }
+}
