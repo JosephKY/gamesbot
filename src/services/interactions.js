@@ -19,6 +19,7 @@ function loadCommands(client){
             let commandList = [];
             let commandModules = fs.readdirSync(join(cwd(), "src", "commands"));
             commandModules.forEach(commandModule=>{
+                if(commandModule.startsWith("."))return;
                 commandModule = require(join(cwd(), "src", "commands", commandModule));
 
                 compiledCommands[commandModule.name] = commandModule;
