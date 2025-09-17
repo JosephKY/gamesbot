@@ -10,7 +10,7 @@ const affirmUser = require("../helpers/affirmuser");
 const { Game, ActiveGame } = require("./games");
 const { transactionHistoryNext, transactionHistoryPrev } = require("../helpers/transhistory");
 let compiledCommands = {};
-let forcePOST = true;
+let forcePOST = false;
 
 function loadCommands(client){
     return new Promise(async (resolve, reject) => {
