@@ -10,7 +10,7 @@ const affirmUser = require("../helpers/affirmuser");
 const { Game, ActiveGame } = require("./games");
 const { transactionHistoryNext, transactionHistoryPrev } = require("../helpers/transhistory");
 let compiledCommands = {};
-let forcePOST = false;
+let forcePOST = true;
 
 function loadCommands(client){
     return new Promise(async (resolve, reject) => {
@@ -36,7 +36,7 @@ function loadCommands(client){
                 
                 let debugGuild = await getGuild(client, debugGuildId)
                 await debugGuild.commands.set([]);
-                //debugGuild.commands.set(commandList)
+                //await debugGuild.commands.set(commandList)
 
                 await CMDState.create({
                     state: commandState

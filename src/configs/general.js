@@ -1,5 +1,5 @@
 module.exports = {
-    designatedGuildId: "948709732066148422",
+    designatedGuildId: "704616349330309200",
     legacyCommandPrefix: ".",
-    debugGuildId: "948709732066148422"
+    debugGuildId: "704616349330309200"
 }
