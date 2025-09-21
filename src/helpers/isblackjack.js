@@ -13,7 +13,7 @@ const classicalValues = {
     '2': 2
 } 
 
-function isBlackjack(hand) {
+function isBlackjack(hand, naturalOnly=false) {
     console.log("HAND", hand)
     const ranks = hand.map(card => card.rank);
     const hasAce = ranks.includes('A');
@@ -22,7 +22,7 @@ function isBlackjack(hand) {
         return true;
     }
 
-    if(!hasAce){
+    if(!hasAce && naturalOnly){
         let classicValue = 0;
         hand.forEach(card=>{
             classicValue += classicalValues[card.rank];

@@ -276,7 +276,11 @@ async function handleGame(interaction, game, action){
             if((handSum < dealerSum && (dealerSum <= 21)) || handSum > 21){
                 balanceIncrement -= hand.bet;
             } else if(handSum > dealerSum && (handSum <= 21) || dealerSum > 21){
-                balanceIncrement += hand.bet;
+                if(isBlackjack(hand, true)){
+                    balanceIncrement += ((5 / 2) * hand.bet);
+                } else {
+                    balanceIncrement += hand.bet;
+                }
             }
         })
         actionText += `\n${interaction.user.username} ${balanceIncrement === 0 ? 'did not lose or make any money' : (balanceIncrement < 0 ? `lost $${Math.abs(balanceIncrement)}` : `earned $${balanceIncrement}`)}`
