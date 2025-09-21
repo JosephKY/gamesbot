@@ -276,7 +276,7 @@ async function handleGame(interaction, game, action){
             if((handSum < dealerSum && (dealerSum <= 21)) || handSum > 21){
                 balanceIncrement -= hand.bet;
             } else if(handSum > dealerSum && (handSum <= 21) || dealerSum > 21){
-                if(isBlackjack(hand, true)){
+                if(isBlackjack(hand.cards, true)){
                     balanceIncrement += ((5 / 2) * hand.bet);
                 } else {
                     balanceIncrement += hand.bet;
